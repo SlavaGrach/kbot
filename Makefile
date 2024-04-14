@@ -7,7 +7,6 @@ format:
 
 get:
 	go get
-
 build: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "X="github.com/SlavaGrach/kbot/cmd.appVersion=${VERSION}
 
