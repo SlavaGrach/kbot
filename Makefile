@@ -5,7 +5,10 @@ TARGETARCH ?= $(shell dpkg --print-architecture)
 format:
 	gofmt -s -w ./
 
-build: format
+get:
+	go get
+
+build: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "X="github.com/SlavaGrach/kbot/cmd.appVersion=${VERSION}
 
 lint:
@@ -19,11 +22,11 @@ clean:
 
 linux: build
 
-windows: format
+windows: format get
 	CGO_ENABLED=0 GOOS=windows GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "X="github.com/SlavaGrach/kbot/cmd.appVersion=${VERSION}
 
-arm: format
+arm: format get
 	CGO_ENABLED=0 GOOS=arm GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "X="github.com/SlavaGrach/kbot/cmd.appVersion=${VERSION}
 
-macos: format
+macos: format get
 	CGO_ENABLED=0 GOOS=ios GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "X="github.com/SlavaGrach/kbot/cmd.appVersion=${VERSION}
