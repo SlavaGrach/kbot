@@ -1,3 +1,5 @@
+APP := $(shell basename $(shell git remote get-url origin))
+
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS ?= linux
 TARGETARCH ?= $(shell dpkg --print-architecture)
@@ -8,7 +10,7 @@ format:
 get:
 	go get
 build: format get
-	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "X="github.com/SlavaGrach/kbot/cmd.appVersion=${VERSION}
+	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/SlavaGrach/kbot/cmd.appVersion=${VERSION}
 
 lint:
 	golint
